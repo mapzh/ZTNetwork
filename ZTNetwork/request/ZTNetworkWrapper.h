@@ -8,7 +8,7 @@
 #define SUCCESS_DATA_OF_REQUEST @"success_data_of_request"
 #define URL_SESSION_TASK_STATUS_KEY @"zt_url_session_task_status"
 
-#import <Foundation/Foundation.h>
+#import <ZTCore/ZTCore.h>
 
 typedef void(^ZT_COMPLETION_BLOCK)(NSURLSessionDataTask *_Nullable response, id _Nullable responseObject, NSError *_Nullable error);
 
