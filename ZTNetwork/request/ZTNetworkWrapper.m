@@ -50,11 +50,9 @@
     void (^successBlock)(NSURLSessionDataTask * _Nonnull, id  _Nullable) = ^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject){
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
         if (task) {
-            [dict setObject:@(task.state) forKey:URL_SESSION_TASK_STATUS_KEY];
+            [dict setSafeObject:@(task.state) forKey:URL_SESSION_TASK_STATUS_KEY];
         }
-        if (responseObject) {
-            [dict setObject:responseObject forKey:SUCCESS_DATA_OF_REQUEST];
-        }
+        [dict setSafeObject:responseObject forKey:SUCCESS_DATA_OF_REQUEST];
         if (completion) {
             completion(task,responseObject,nil);
         }
@@ -77,7 +75,7 @@
 
 
 - (void)clearAllRequest{
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    AFHTTPSessionManager *manager = self.sessionManager;
     for (NSURLSessionTask *task in manager.tasks) {
         if ([self.taskIdentifiers containsObject:@(task.taskIdentifier)]) {
             [task cancel];
