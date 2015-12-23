@@ -46,6 +46,10 @@
 }
 
 - (void)sendRequestWithUrlString:(nonnull NSString *)urlString requestMethod:(ZT_REQUEST_METHOD)method parameters:(nullable NSDictionary *)parameters completion:(nullable ZT_COMPLETION_BLOCK)completion{
+    [self sendRequestWithUrlString:urlString requestMethod:method parameters:parameters progress:nil completion:completion];
+}
+
+- (void)sendRequestWithUrlString:(nonnull NSString *)urlString requestMethod:(ZT_REQUEST_METHOD)method parameters:(nullable NSDictionary *)parameters progress:(nullable ZT_PROGRESS_BLOCK) downloadProgress completion:(nullable ZT_COMPLETION_BLOCK)completion{
     AFHTTPSessionManager *manager = self.sessionManager;
     void (^successBlock)(NSURLSessionDataTask * _Nonnull, id  _Nullable) = ^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject){
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
@@ -64,15 +68,14 @@
     };
     NSURLSessionDataTask *dataTask = nil;
     if (method==ZT_REQUEST_METHOD_GET) {
-        dataTask = [manager GET:urlString parameters:parameters progress:nil success:successBlock failure:failBlock];
+        dataTask = [manager GET:urlString parameters:parameters progress:downloadProgress success:successBlock failure:failBlock];
     }else if (method==ZT_REQUEST_METHOD_POST){
-        dataTask = [manager POST:urlString parameters:parameters progress:nil success:successBlock failure:failBlock];
+        dataTask = [manager POST:urlString parameters:parameters progress:downloadProgress success:successBlock failure:failBlock];
     }
     if (dataTask.taskIdentifier) {
         [self.taskIdentifiers addObject:@(dataTask.taskIdentifier)];
     }
 }
-
 
 - (void)clearAllRequest{
     AFHTTPSessionManager *manager = self.sessionManager;

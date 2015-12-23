@@ -11,6 +11,7 @@
 #import <ZTCore/ZTCore.h>
 
 typedef void(^ZT_COMPLETION_BLOCK)(NSURLSessionDataTask *_Nullable response, id _Nullable responseObject, NSError *_Nullable error);
+typedef void(^ZT_PROGRESS_BLOCK)(NSProgress *_Nullable progress);
 
 typedef enum{
     ZT_REQUEST_METHOD_GET = 0,
@@ -21,7 +22,7 @@ typedef enum{
 @interface ZTNetworkWrapper : NSObject
 
 /**
- *  发起请求
+ *  发起请求（GET、POST）
  *
  *  @param urlString  请求地址
  *  @param method     GET or POST
@@ -29,6 +30,17 @@ typedef enum{
  *  @param completion 请求完成执行block
  */
 - (void)sendRequestWithUrlString:(nonnull NSString *)urlString requestMethod:(ZT_REQUEST_METHOD)method parameters:(nullable NSDictionary *)parameters completion:(nullable ZT_COMPLETION_BLOCK)completion;
+
+/**
+ *  发起可感知进度的请求（GET、POST）
+ *
+ *  @param urlString  请求地址
+ *  @param method     GET or POST
+ *  @param parameters 请求参数
+ *  @param downloadProgress 感知到请求进度后执行的block
+ *  @param completion 请求完成执行block
+ */
+- (void)sendRequestWithUrlString:(nonnull NSString *)urlString requestMethod:(ZT_REQUEST_METHOD)method parameters:(nullable NSDictionary *)parameters progress:(nullable ZT_PROGRESS_BLOCK) downloadProgress completion:(nullable ZT_COMPLETION_BLOCK)completion;
 
 /**
  *  清除self生成的所有请求
