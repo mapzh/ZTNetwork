@@ -22,6 +22,11 @@ typedef enum{
 @interface ZTNetworkWrapper : NSObject
 
 /**
+ *  若未赋值，则取[AFHTTPSessionManager manager]
+ */
+@property (nonatomic,strong) AFHTTPSessionManager *_Nullable sessionManager;
+
+/**
  *  发起请求（GET、POST）
  *
  *  @param urlString  请求地址
@@ -46,4 +51,6 @@ typedef enum{
  *  清除self生成的所有请求
  */
 - (void)clearAllRequest;
+
+- (dispatch_group_t)getCurrentApiDGT;
 @end

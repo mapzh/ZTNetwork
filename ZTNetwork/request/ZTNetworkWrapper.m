@@ -14,11 +14,6 @@
  */
 @property (nonatomic,strong) NSMutableArray *_Nullable taskIdentifiers;
 
-/**
- *  若未赋值，则取[AFHTTPSessionManager manager]
- */
-@property (nonatomic,strong) AFHTTPSessionManager *_Nullable sessionManager;
-
 @end
 
 @implementation ZTNetworkWrapper
@@ -84,5 +79,9 @@
             [task cancel];
         }
     }
+}
+
+- (dispatch_group_t)getCurrentApiDGT{
+    return [self sessionManager].completionGroup;
 }
 @end
