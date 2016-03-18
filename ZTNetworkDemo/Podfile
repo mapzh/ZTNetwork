@@ -2,9 +2,10 @@
 # platform :ios, '8.0'
 # Uncomment this line if you're using Swift
 # use_frameworks!
-
+source 'git@gitlab.com:zt/ZTCocoapods.git'
+source 'https://github.com/CocoaPods/Specs.git'
 target 'ZTNetworkDemo' do
-pod 'ZTCore', :path => '../../ztcore'
+pod 'ZTCore'#, :path => '../../ztcore'
 pod 'AFNetworking'
 end
 

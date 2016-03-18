@@ -1,12 +1,12 @@
 Pod::Spec.new do |s|
   s.name     = 'ZTNetwork'
-  s.version  = '1.0.2'
+  s.version  = '1.0.3'
   s.license  = { :type => "MIT", :file => "FILE_LICENSE" }
   s.summary  = 'Core'
   s.homepage = 'https://gitlab.com/zt/ztnetwork'
   #s.social_media_url = 'https://xx'
   s.authors  = { 'mapengzhen' => 'mpz129@sina.com' }
-  s.source   = { :git => 'https://gitlab.com/zt/ztnetwork.git', :tag => s.version }
+  s.source   = { :git => 'git@gitlab.com:zt/ZTNetwork.git', :tag => s.version }
   s.requires_arc = true
 
   s.ios.deployment_target = '6.0'
