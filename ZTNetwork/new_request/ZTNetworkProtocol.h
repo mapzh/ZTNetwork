@@ -5,11 +5,18 @@
 //  Created by mapengzhen on 16/9/9.
 //  Copyright © 2016年 mapengzhen. All rights reserved.
 //
+#import <Foundation/Foundation.h>
 
 @protocol ZTNetworkProtocol <NSObject>
 
+@optional
+
 // Request delegate
 @property (nonatomic, weak) id delegate;
+
+
+// HTTP method to use (eg: GET / POST / PUT / DELETE / HEAD etc). Defaults to GET
+@property (nonatomic, copy) NSString *requestMethod;
 
 
 // Dictionary for custom HTTP request headers
@@ -55,10 +62,6 @@
 
 // Run request in the background
 - (void)startAsynchronous;
-
-
-// HTTP method to use (eg: GET / POST / PUT / DELETE / HEAD etc). Defaults to GET
-- (void)setRequestMethod:(NSString*) method;
 
 
 //Cancel the request
