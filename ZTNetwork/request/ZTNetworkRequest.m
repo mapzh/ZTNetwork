@@ -9,6 +9,7 @@
 #import "ZTNetworkRequest.h"
 #import "ZTCommonFunction.h"
 #import "ZTSafeDictionnary.h"
+#import "ZTNetworkRequestManager.h"
 
 NSString *const ZTNetworkRequestMethodGet = @"GET";
 NSString *const ZTNetworkRequestMethodPost = @"POST";
@@ -19,6 +20,7 @@ NSString *const ZTNetworkServiceMethod = @"serviceMethod";
 
 @interface ZTNetworkRequest()
 @property (nonatomic, strong) NSURLSessionDataTask *operation;
+
 
 @end
 
@@ -33,6 +35,8 @@ NSString *const ZTNetworkServiceMethod = @"serviceMethod";
         self.requestMethod = ZTNetworkRequestMethodGet;
         self.timeOutSeconds = 15;
         self.clientCertificates = nil;
+        self.numberOfTimesToRetryOnTimeout = 0;
+        [[ZTNetworkRequestManager sharedManager] addRequest:self];
     }
     return self;
 }
@@ -175,12 +179,29 @@ NSString *const ZTNetworkServiceMethod = @"serviceMethod";
     NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL:retUrl];
     if (isNotEmptyArray(cookies)) {
         
-        NSDictionary *cookieInfo = [NSHTTPCookie requestHeaderFieldsWithCookies:cookies];
-        NSString *cookieHeader = [cookieInfo stringValueForKey:@"Cookie"];
+        NSHTTPCookie *cookie;
+        NSString *cookieHeader = nil;
+        for (cookie in cookies) {
+            if (!isNotEmptyString(cookieHeader)) {
+                cookieHeader = [NSString stringWithFormat: @"%@=%@",[cookie name],[cookie value]];
+            } else {
+                cookieHeader = [NSString stringWithFormat: @"%@; %@=%@",cookieHeader,[cookie name],[cookie value]];
+            }
+        }
         if (isNotEmptyString(cookieHeader)) {
             [self.sessioManager.requestSerializer setValue:cookieHeader forHTTPHeaderField:@"Cookie"];
         }
     }
 }
 
+
+- (void)cancel{
+    [self.operation cancel];
+}
+
+- (void)addRequestHeader:(NSString *)header value:(NSString *)value{
+    if (isNotEmptyString(value)&&isNotEmptyString(header)) {
+        [self.sessioManager.requestSerializer setValue:value forHTTPHeaderField:header];
+    }
+}
 @end

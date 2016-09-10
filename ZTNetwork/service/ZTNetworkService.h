@@ -10,4 +10,14 @@
 
 @interface ZTNetworkService : ZTNetworkRequest
 
+- (void)sendRequestToUrl:(NSURL *)url
+           requestMethod:(NSString *)method
+              parameters:(NSDictionary *)params
+              completion:(ZTNetworkRequestBasicBlock)completion
+                 failure:(ZTNetworkRequestBasicBlock)failure;
+
+- (id)getObjectFromResponse;
+
+- (id)getErrorFromResponse;
+
 @end

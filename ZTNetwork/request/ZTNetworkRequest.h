@@ -37,8 +37,6 @@ typedef void(^ZTNetworkRequestBasicBlock)(void);
 
 @property(nonatomic, strong) NSURLRequest *request;
 
-@property (nonatomic, weak) id<ZTNetworkRequestDelegate> delegate;
-
 @property (nonatomic, copy) ZTNetworkRequestBasicBlock completionBlock;
 
 @property (nonatomic, copy) ZTNetworkRequestBasicBlock failureBlock;
@@ -46,8 +44,26 @@ typedef void(^ZTNetworkRequestBasicBlock)(void);
 //请求参数
 @property (nonatomic, strong) NSMutableDictionary *parameters;
 
-- (instancetype)initWithUrl:(NSURL *)url;
 
 //重置cookie
 - (void)resetCookies;
+
+
+
+#pragma mark-ZTNetworkProtocol protocol imp
+@property(nonatomic, strong) NSURL* url;
+@property (nonatomic, weak) id<ZTNetworkRequestDelegate> delegate;
+@property (nonatomic, copy) NSString *requestMethod;
+@property (nonatomic, strong) NSMutableDictionary *requestHeaders;
+@property (nonatomic, strong) NSMutableArray *requestCookies;
+@property (nonatomic, strong) NSDictionary *responseHeaders;
+@property (nonatomic, assign) BOOL allowCompressedResponse;
+@property (nonatomic, assign) NSTimeInterval timeOutSeconds;
+@property (nonatomic, copy) NSString *responseString;
+@property (nonatomic, strong) NSData *responseData;
+@property (nonatomic, strong) NSError *error;
+@property (nonatomic, assign) NSInteger responseStatusCode;
+@property (nonatomic, strong) NSArray *clientCertificates;
+@property (nonatomic, assign) BOOL cancelled;
+@property (nonatomic, assign) int numberOfTimesToRetryOnTimeout;
 @end
