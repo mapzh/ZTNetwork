@@ -7,7 +7,6 @@
 //
 
 #import "ViewController.h"
-#import "ZTService.h"
 #define token @"a8b43edbih7chddd48qqmfawq98ae5C1"
 #define userid @"464"
 @interface ViewController ()
@@ -20,12 +19,12 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     NSString *url = @"http://client.weimai.com/weimai/s/shop/bigitems.json";
-    ZTService *service = [[ZTService alloc] init];
-    
-    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"id":userid,@"pageno":[NSString stringWithFormat:@"%d",1],@"token":token}];
-    [service sendRequestWithUrlString:url requestMethod:ZT_REQUEST_METHOD_GET parameters:param completion:^(NSURLSessionDataTask * _Nullable response, id  _Nullable responseObject, NSError * _Nullable error) {
-        NSLog(@"complete--%@",[NSDate date]);
-    }];
+//    ZTService *service = [[ZTService alloc] init];
+//    
+//    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithDictionary:@{@"id":userid,@"pageno":[NSString stringWithFormat:@"%d",1],@"token":token}];
+//    [service sendRequestWithUrlString:url requestMethod:ZT_REQUEST_METHOD_GET parameters:param completion:^(NSURLSessionDataTask * _Nullable response, id  _Nullable responseObject, NSError * _Nullable error) {
+//        NSLog(@"complete--%@",[NSDate date]);
+//    }];
 }
 
 - (void)didReceiveMemoryWarning {

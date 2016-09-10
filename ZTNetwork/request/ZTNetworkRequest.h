@@ -35,6 +35,8 @@ typedef void(^ZTNetworkRequestBasicBlock)(void);
 
 @property (nonatomic, strong) AFHTTPSessionManager *sessioManager;
 
+@property(nonatomic, strong) NSURLRequest *request;
+
 @property (nonatomic, weak) id<ZTNetworkRequestDelegate> delegate;
 
 @property (nonatomic, copy) ZTNetworkRequestBasicBlock completionBlock;

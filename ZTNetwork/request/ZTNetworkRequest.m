@@ -67,17 +67,42 @@ NSString *const ZTNetworkServiceMethod = @"serviceMethod";
     self.sessioManager.requestSerializer.timeoutInterval = self.timeOutSeconds;
     self.sessioManager.responseSerializer = [AFHTTPResponseSerializer serializer];
     if ([self.requestMethod isEqualToString:ZTNetworkRequestMethodGet]) {
-        self.operation = [self.sessioManager GET:self.url.absoluteString parameters:self.parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            [instance completion:task rep:responseObject];
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            [instance failed:task error:error];
-        }];
+        self.operation = [self.sessioManager GET:self.url.absoluteString
+                                      parameters:self.parameters
+                                        progress:nil
+                                         success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                                             [instance completion:task rep:responseObject];
+                                         }
+                                         failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                                             [instance failed:task error:error];
+                                         }];
     }else if ([self.requestMethod isEqualToString:ZTNetworkRequestMethodPost]){
-        
+        self.operation = [self.sessioManager POST:self.url.absoluteString
+                                       parameters:self.parameters
+                                         progress:nil
+                                          success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                                              [instance completion:task rep:responseObject];
+                                          }
+                                          failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                                              [instance failed:task error:error];
+                                          }];
     }else if ([self.requestMethod isEqualToString:ZTNetworkRequestMethodPut]){
-        
+        self.operation = [self.sessioManager PUT:self.url.absoluteString
+                                      parameters:self.parameters
+                                         success:^(NSURLSessionDataTask *operation, id responseObject) {
+                                             [instance completion:operation rep:responseObject];
+                                         } failure:^(NSURLSessionDataTask *operation, NSError *error) {
+                                             [instance failed:operation error:error];
+                                         }];
     }else if ([self.requestMethod isEqualToString:ZTNetworkRequestMethodDelete]){
-        
+        self.operation = [self.sessioManager DELETE:self.url.absoluteString
+                                         parameters:self.parameters
+                                            success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                                                [instance completion:task rep:responseObject];
+                                            }
+                                            failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                                                [instance failed:task error:error];
+                                            }];
     }
 }
 
@@ -92,6 +117,7 @@ NSString *const ZTNetworkServiceMethod = @"serviceMethod";
 }
 
 - (void)completion:(NSURLSessionDataTask *)operation rep: (id)responseObject {
+    self.request = operation.originalRequest;
     NSHTTPURLResponse *response = (NSHTTPURLResponse*) self.operation.response;
     self.responseStatusCode = response.statusCode;
     self.responseData = responseObject;
@@ -107,6 +133,7 @@ NSString *const ZTNetworkServiceMethod = @"serviceMethod";
 }
 
 - (void)failed:(NSURLSessionDataTask *)operation error: (NSError*)error {
+    self.request = operation.originalRequest;
     self.error = operation.error;
     
     if ([operation.response isKindOfClass:[NSHTTPURLResponse class]]) {
