@@ -5,7 +5,7 @@
 source 'https://gitlab.com/zt/ZTCocoapods.git'
 source 'https://github.com/CocoaPods/Specs.git'
 target 'ZTNetworkDemo' do
-pod 'ZTCore'#, :path => '../../ztcore'
+pod 'ZTCore', :path => '../../ZTCore'
 pod 'AFNetworking'
 end
 

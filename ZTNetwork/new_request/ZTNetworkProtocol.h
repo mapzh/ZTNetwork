@@ -11,6 +11,9 @@
 
 @optional
 
+//Requset URL
+@property(nonatomic, strong) NSURL* url;
+
 // Request delegate
 @property (nonatomic, weak) id delegate;
 
@@ -24,11 +27,11 @@
 
 
 // Can be used to manually insert cookie headers to a request, but it's more likely that sessionCookies will do this for you
-@property (strong) NSMutableArray *requestCookies;
+@property (nonatomic, strong) NSMutableArray *requestCookies;
 
 
 // Will be populated with HTTP response headers from the server
-@property (strong) NSDictionary *responseHeaders;
+@property (nonatomic, strong) NSDictionary *responseHeaders;
 
 
 // If allowCompressedResponse is true, requests will inform the server they can accept compressed data, and will automatically decompress gzipped responses. Default is true.
@@ -39,8 +42,20 @@
 @property (nonatomic, assign) NSTimeInterval timeOutSeconds;
 
 
+// Returns the contents of the result as an NSString (not appropriate for binary data - used responseData instead)
+@property (nonatomic, copy) NSString *responseString;
+
+
+// Response data, automatically uncompressed where appropriate
+@property (nonatomic, strong) NSData *responseData;
+
+
 // If an error occurs, error will contain an NSError
 @property (nonatomic, strong) NSError *error;
+
+
+// HTTP status code, eg: 200 = OK, 404 = Not found etc
+@property (nonatomic, assign) NSInteger responseStatusCode;
 
 
 // Set to allow a request to automatically retry itself on timeout
@@ -74,18 +89,6 @@
 
 // Add a custom header to the request
 - (void)addRequestHeader:(NSString *)header value:(NSString *)value;
-
-
-// HTTP status code, eg: 200 = OK, 404 = Not found etc
-- (int)responseStatusCode;
-
-
-// Returns the contents of the result as an NSString (not appropriate for binary data - used responseData instead)
-- (NSString *)responseString;
-
-
-// Response data, automatically uncompressed where appropriate
-- (NSData *)responseData;
 
 
 // Convenience constructor
