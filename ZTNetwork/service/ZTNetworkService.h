@@ -7,6 +7,10 @@
 //
 
 #import "ZTNetworkRequest.h"
+#import "ZTError.h"
+
+typedef void(^ZTServiceCompletionBlock)(id data);
+typedef void(^ZTServiceFailureBlock)(ZTError *error);
 
 @interface ZTNetworkService : ZTNetworkRequest
 
